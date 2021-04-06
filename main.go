@@ -42,7 +42,7 @@ type GopsStats struct {
 	Started        time.Time
 	Duration       time.Duration
 	Success        bool
-	ConnectionsQty uint
+	ConnectionsQty int
 }
 
 type PropertiesList []string
