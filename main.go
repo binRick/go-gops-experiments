@@ -38,9 +38,11 @@ type GopsStat struct {
 }
 
 type GopsStats struct {
-	Stats    []GopsStat
-	Started  time.Time
-	Duration time.Duration
+	Stats          []GopsStat
+	Started        time.Time
+	Duration       time.Duration
+	Success        bool
+	ConnectionsQty uint
 }
 
 type PropertiesList []string
@@ -57,10 +59,13 @@ func (list PropertiesList) Has(a string) bool {
 func main() {
 	gops_stats := GopsStats{
 		Started: time.Now(),
+		Success: false,
 	}
 	for label, s := range gops_signals {
 		c, err := net.Dial("tcp", GOPS_ADDR)
 		if err == nil {
+			gops_stats.Success = true
+			gops_stats.ConnectionsQty += 1
 			buf := []byte{s}
 			_, err = c.Write(buf)
 			if err == nil {
