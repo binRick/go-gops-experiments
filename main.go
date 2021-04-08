@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/google/gops/signal"
 	"github.com/k0kubun/pp"
@@ -120,5 +121,9 @@ func main() {
 			gops_stats.Duration = time.Since(gops_stats.Started)
 		}
 	}
-	pp.Println(gops_stats)
+	if false {
+		pp.Println(gops_stats)
+	}
+	j, _ := json.Marshal(gops_stats)
+	fmt.Println(string(j))
 }
