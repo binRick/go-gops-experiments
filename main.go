@@ -3,13 +3,16 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/google/gops/signal"
-	"github.com/k0kubun/pp"
 	"io/ioutil"
 	"net"
 	"strconv"
 	"strings"
 	"time"
+
+	types "github.com/binRick/go-gops-experiments/types"
+
+	"github.com/google/gops/signal"
+	"github.com/k0kubun/pp"
 )
 
 const (
@@ -30,22 +33,6 @@ var (
 	}
 )
 
-type GopsStat struct {
-	Property  string
-	Value     interface{}
-	IntValue  int64
-	ValueUnit string
-	Label     string
-}
-
-type GopsStats struct {
-	Stats          []GopsStat
-	Started        time.Time
-	Duration       time.Duration
-	Success        bool
-	ConnectionsQty int
-}
-
 type PropertiesList []string
 
 func (list PropertiesList) Has(a string) bool {
@@ -58,7 +45,7 @@ func (list PropertiesList) Has(a string) bool {
 }
 
 func main() {
-	gops_stats := GopsStats{
+	gops_stats := types.GopsStats{
 		Started: time.Now(),
 		Success: false,
 	}
@@ -105,7 +92,7 @@ func main() {
 										int_val = b
 									}
 								}
-								gops_stats.Stats = append(gops_stats.Stats, GopsStat{
+								gops_stats.Stats = append(gops_stats.Stats, types.GopsStat{
 									Property:  prop,
 									Value:     val,
 									ValueUnit: val_unit,
